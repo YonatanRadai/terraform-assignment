@@ -18,3 +18,9 @@ variable "subnet_id" {
 variable "vpc_id" {
     description = "id of vpc in order to crate SG in that vpc"
 }
+
+variable "associate_public_ip" {
+  description = "Whether to associate a public IP address to the instance"
+  type        = bool
+  default     = false
+}

@@ -30,6 +30,7 @@ module "instance" {
   source = "./modules/instance"
   ami                   = "ami-0e1bed4f06a3b463d"
   type                  = "t2.micro"
+  associate_public_ip   = true
   machine_name          = "yonatan_machine_8"
   subnet_id             = module.subnet.public_subnet_id
   vpc_id                = module.vpc.vpc_id

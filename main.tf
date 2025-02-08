@@ -1,12 +1,12 @@
 # root/main.tf
 provider "aws" {
-  region = "us-east-1"  # Change this to your desired region
+  region = "us-east-1" 
 }
 
 module "vpc" {
-  source = "./modules/vpc"
-
-  vpc_cidr               = "10.0.0.0/16"
+  source                = "./modules/vpc"
+  subnet_count          = 2
+  vpc_cidr              = "10.0.0.0/16"
   environment           = "dev"
   public_subnet_cidr    = "10.0.1.0/24"
   private_subnet_cidr   = "10.0.2.0/24"

@@ -31,3 +31,9 @@ variable "availability_zone_private" {
   description = "Availability zone for private subnet"
   type        = string
 }
+
+variable "subnet_count" {
+  description = "Number of subnets to create"
+  type        = number
+  default     = 1
+}

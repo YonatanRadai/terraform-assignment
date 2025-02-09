@@ -8,3 +8,6 @@ variable "name" {
 variable "subnets_ids" {
     description = "subnet the alb is in"
 }
+output "target_group_arn" {
+  value = aws_lb_target_group.tg.arn
+}

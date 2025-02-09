@@ -14,6 +14,12 @@ module "vpc" {
   availability_zone_private = "us-east-1b"
 }
 
+module "security_group" {
+  source = "./modules/security_group"
+  vpc_id = module.vpc.vpc_id
+  depends_on = [ module.vpc ]
+}
+
 module "subnet" {
   source = "./modules/subnet"
 
@@ -37,7 +43,8 @@ module "instance" {
   machine_name          = "yonatan_machine-8"
   subnet_id             = module.subnet.public_subnet_id
   vpc_id                = module.vpc.vpc_id
-  depends_on = [ module.subnet ]
+  depends_on = [ module.subnet, module.security_group]
+  security_group_id = module.security_group.security_group_id
 }
 
 module "alb" {
@@ -45,11 +52,18 @@ module "alb" {
   vpc_id = module.vpc.vpc_id
   name = "yonatan-alb-8"
   subnets_ids = [module.subnet.public_subnet_id, module.subnet.public1_subnet_id]
-  depends_on = [ module.instance ]
 }
 
-# module "asg" {
-#   source = "./modules/autoscaling"
-#   vpc_zone_identifier = [module.subnet.availability_zone_public.id, module.subnet.availability_zone_private.id]
-# }
+module "autoscaling" {
+  source = "./modules/autoscaling"
+  
+  ami_id            = "ami-0e1bed4f06a3b463d"  
+  instance_type     = "t2.micro"
+  security_group_id = module.security_group.security_group_id
+  target_group_arn  = module.alb.target_group_arn
+  subnet_ids        = module.subnet.private_subnet_id
+  min_size         = 1
+  max_size         = 3
+  desired_capacity = 1
+}
 

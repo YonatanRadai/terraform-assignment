@@ -10,6 +10,17 @@ resource "aws_subnet" "public" {
     Environment = var.environment
   }
 }
+resource "aws_subnet" "public1" {
+  vpc_id                  = var.vpc_id
+  cidr_block              = var.public1_subnet_cidr
+  map_public_ip_on_launch = true
+  availability_zone       = var.availability_zone_public1
+
+  tags = {
+    Name        = "${var.environment}-public1-subnet"
+    Environment = var.environment
+  }
+}
 
 resource "aws_subnet" "private" {
   vpc_id            = var.vpc_id

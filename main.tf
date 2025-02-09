@@ -5,7 +5,6 @@ provider "aws" {
 
 module "vpc" {
   source                = "./modules/vpc"
-  subnet_count          = 2
   vpc_cidr              = "10.0.0.0/16"
   environment           = "dev"
   public_subnet_cidr    = "10.0.1.0/24"
@@ -24,6 +23,7 @@ module "subnet" {
   source = "./modules/subnet"
 
   vpc_id                = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr
   public_subnet_cidr    = "10.0.1.0/24"
   public1_subnet_cidr = "10.0.3.0/24"
   private_subnet_cidr   = "10.0.2.0/24"

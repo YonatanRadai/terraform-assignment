@@ -40,3 +40,14 @@ variable "internet_gateway_id" {
   description = "Internet Gateway ID"
   type        = string
 }
+
+variable "subnet_count" {
+  description = "Number of subnets to create"
+  type        = number
+  default     = 2
+}
+
+variable "vpc_cidr" {
+  description = "VPC CIDR block"
+  type        = string
+}

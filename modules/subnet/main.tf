@@ -65,3 +65,23 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private.id
   route_table_id = aws_route_table.private.id
 }
+
+# Public Subnets
+# Public Subnets
+resource "aws_subnet" "many_public" {
+  count                   = var.subnet_count
+  vpc_id                  = var.vpc_id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index + 4)  # Changed start_cidr to vpc_cidr and adjusted the offset
+  map_public_ip_on_launch = true
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
+
+  tags = {
+    Name        = "${var.environment}-public-subnet-${count.index + 1}"
+    Environment = var.environment
+  }
+}
+
+# Get list of AZs
+data "aws_availability_zones" "available" {
+  state = "available"
+}

@@ -1,4 +1,3 @@
-# modules/subnet/variables.tf
 variable "vpc_id" {
   description = "VPC ID"
   type        = string

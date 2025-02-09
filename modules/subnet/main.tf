@@ -1,4 +1,3 @@
-# modules/subnet/main.tf
 resource "aws_subnet" "public" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.public_subnet_cidr
@@ -66,12 +65,10 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
-# Public Subnets
-# Public Subnets
 resource "aws_subnet" "many_public" {
   count                   = var.subnet_count
   vpc_id                  = var.vpc_id
-  cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index + 4)  # Changed start_cidr to vpc_cidr and adjusted the offset
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index + 4) 
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[count.index]
 
@@ -81,7 +78,6 @@ resource "aws_subnet" "many_public" {
   }
 }
 
-# Get list of AZs
 data "aws_availability_zones" "available" {
   state = "available"
 }

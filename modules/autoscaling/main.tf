@@ -1,4 +1,3 @@
-# Launch Template
 resource "aws_launch_template" "lt" {
   name = "my-launch-template"
   image_id = var.ami_id
@@ -26,7 +25,7 @@ resource "aws_launch_template" "lt" {
   }
 }
 
-# Auto Scaling Group
+
 resource "aws_autoscaling_group" "asg" {
   desired_capacity    = var.desired_capacity
   max_size           = var.max_size
@@ -46,7 +45,7 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
-# Scale up policy
+
 resource "aws_autoscaling_policy" "scale_up" {
   name                   = "scale-up"
   scaling_adjustment     = 1
@@ -55,7 +54,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
-# Scale down policy
+
 resource "aws_autoscaling_policy" "scale_down" {
   name                   = "scale-down"
   scaling_adjustment     = -1

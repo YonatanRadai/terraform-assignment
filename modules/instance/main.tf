@@ -9,3 +9,4 @@ resource "aws_instance" "ec2" {
     subnet_id = var.subnet_id
   
 }
+

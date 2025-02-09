@@ -52,6 +52,8 @@ module "alb" {
   vpc_id = module.vpc.vpc_id
   name = "yonatan-alb-8"
   subnets_ids = [module.subnet.public_subnet_id, module.subnet.public1_subnet_id]
+  security_groups_id = [module.security_group.security_group_id]
+  depends_on = [ module.security_group ]
 }
 
 module "autoscaling" {
@@ -61,7 +63,7 @@ module "autoscaling" {
   instance_type     = "t2.micro"
   security_group_id = module.security_group.security_group_id
   target_group_arn  = module.alb.target_group_arn
-  subnet_ids        = module.subnet.private_subnet_id
+  subnet_ids        = [module.subnet.private_subnet_id]
   min_size         = 1
   max_size         = 3
   desired_capacity = 1

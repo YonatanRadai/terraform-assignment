@@ -2,7 +2,7 @@ resource "aws_lb" "alb" {
   name               = var.name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.sg.id]
+  security_groups    = var.security_groups_id
   subnets            = var.subnets_ids
   
 }
@@ -14,7 +14,14 @@ resource "aws_lb_target_group" "tg" {
   
 
   health_check {
-    enabled = false #did not ask for it in the task.
+    enabled = true
+    interval = 30
+    path ="/"
+    port = "traffic-port"
+    protocol = "HTTP"
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 5
   }
 }
 

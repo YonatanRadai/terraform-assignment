@@ -25,4 +25,5 @@ variable "associate_public_ip" {
   default     = false
 }
 variable "security_group_id" {
+    description = "security group of the instance"
 }
